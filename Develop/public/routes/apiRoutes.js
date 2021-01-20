@@ -78,17 +78,18 @@ module.exports = function (app) {
     app.delete('/api/notes/delete/:id', async (req, res) => {
         let id = req.params.id
         let content = JSON.parse(await fs.readFileSync(dbFile, 'utf8'))
+        console.log(id);
+        console.log(content);
 
         content.forEach((note, i) => {
             if (note['id'] === parseInt(id)) {
+                console.log("found it");
                 content.splice(i, 1)
-            } else {
-                res.json({
-                    msg: "no record found"
-                });
+                res.status(200);
             }
         });
-
-        res.json(content);
+        fs.writeFile(dbFile, JSON.stringify(content), (err) => {
+            if (err) throw err
+        })
     });
 };

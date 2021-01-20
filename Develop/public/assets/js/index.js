@@ -19,8 +19,9 @@ const getNotes = () => {
 
 // A function for saving a note to the db
 const saveNote = (note) => {
+    console.log(note);
     return $.ajax({
-        url: "/api/notes",
+        url: "/api/note/new",
         data: note,
         method: "POST",
     });
@@ -29,7 +30,7 @@ const saveNote = (note) => {
 // A function for deleting a note from the db
 const deleteNote = (id) => {
     return $.ajax({
-        url: "api/notes/" + id,
+        url: "api/notes/delete/" + id,
         method: "DELETE",
     });
 };
@@ -53,7 +54,6 @@ const renderActiveNote = () => {
 
 // Get the note data from the inputs, save it to the db and update the view
 const handleNoteSave = function () {
-    console.log("click save");
     const newNote = {
         title: $noteTitle.val(),
         text: $noteText.val(),
